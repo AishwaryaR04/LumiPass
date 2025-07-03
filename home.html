@@ -6,8 +6,58 @@
   <title>Serene Travel Companion</title>
   <link rel="stylesheet" href="home.css" />
   <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    /* Globe styles */
+    #globeViz {
+      width: 100%;
+      height: 500px; /* Adjust height if needed */
+      background-color: black;
+    }
+
+    .top-bar {
+      width: 100%;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      padding: 1rem 2rem;
+      gap: 1rem;
+      position: relative;
+      z-index: 5;
+    }
+
+    .sign-in-btn {
+      padding: 0.5rem 1rem;
+      background-color: #00a896;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .sign-in-btn:hover {
+      background-color: #028c74;
+    }
+
+    .profile-pic {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+  </style>
 </head>
 <body>
+  <!-- Top bar -->
+  <div class="top-bar">
+    <button class="sign-in-btn">Sign In</button>
+    <img src="https://via.placeholder.com/40" alt="Profile" class="profile-pic" />
+  </div>
+
+  <!-- Globe -->
+  <div id="globeViz"></div>
+
   <div class="wrapper">
     <header>
       <h1>🌍 Serene Travel Companion</h1>
@@ -20,7 +70,6 @@
           <option value="couple">Couple 💑</option>
         </select>
       </div>
-    
     </header>
 
     <div class="scroll-wrapper">
@@ -54,6 +103,29 @@
       <button class="scroll-btn right" id="scrollRight">›</button>
     </div>
   </div>
+
+  <script src="https://unpkg.com/globe.gl"></script>
+  <script>
+    const Globe = window.Globe;
+    const world = Globe()(document.getElementById('globeViz'))
+      .globeImageUrl('https://unpkg.com/three-globe/example/img/earth-blue-marble.jpg')
+      .backgroundImageUrl('https://unpkg.com/three-globe/example/img/night-sky.png')
+      .showAtmosphere(true)
+      .atmosphereColor('#3a228a')
+      .atmosphereAltitude(0.25);
+
+    world.controls().autoRotate = true;
+    world.controls().autoRotateSpeed = 1.0;
+    world.controls().enableZoom = false;
+    world.controls().enablePan = false;
+    world.controls().enableRotate = false;
+
+    function animate() {
+      world.controls().update();
+      requestAnimationFrame(animate);
+    }
+    animate();
+  </script>
 
   <script src="home.js"></script>
 </body>

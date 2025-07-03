@@ -1,0 +1,147 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Quicksand', sans-serif;
+  background: linear-gradient(135deg, #e0f7fa, #fcefe3);
+  color: #2c2c2c;
+}
+
+.wrapper {
+  width: 100%;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+/* Header */
+header {
+  text-align: center;
+}
+
+header h1 {
+  font-size: 2.5rem;
+  color: #118ab2;
+  margin-bottom: 0.5rem;
+}
+
+.filter-bar {
+  margin: 1rem auto;
+}
+
+.filter-bar select {
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  margin-left: 0.5rem;
+}
+
+/* Horizontal scroll section */
+main {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  gap: 1.5rem;
+  padding: 1rem 2rem;
+  margin-top: -20px; /* Move up slightly */
+  justify-content: start;
+  align-items: center;
+  height: 280px;
+  scroll-behavior: smooth;
+  width: 100%;
+}
+
+main::-webkit-scrollbar {
+  display: none; /* Hide scrollbar */
+}
+
+.card {
+  flex: 0 0 auto;
+  scroll-snap-align: center;
+  background-color: #ffffffcc;
+  border-radius: 20px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  width: 250px;
+  height: 250px;
+  padding: 1.5rem;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  animation: slideIn 0.8s ease forwards;
+}
+
+.card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.card h2 {
+  margin-bottom: 1rem;
+  color: #006d77;
+}
+
+.card p {
+  font-size: 1rem;
+  color: #444;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.scroll-wrapper {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 4rem; /* Moves the scroll section lower on the page */
+}
+
+.scroll-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #ffffffee;
+  border: none;
+  font-size: 3rem;
+  color: #00a896;
+  border-radius: 50%;
+  padding: 0.5rem 1.2rem;
+  cursor: pointer;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+  transition: background 0.3s, transform 0.3s;
+}
+
+.scroll-btn:hover {
+  background: #d1f2eb;
+  transform: translateY(-50%) scale(1.1);
+}
+
+.scroll-btn.left {
+  left: 0;
+}
+
+.scroll-btn.right {
+  right: 0;
+}
+
+@media (max-width: 768px) {
+  .scroll-btn {
+    font-size: 2.2rem;
+    padding: 0.3rem 0.8rem;
+  }
+}

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=1024, height=768" />
+  <title>Serene Travel Companion</title>
+  <link rel="stylesheet" href="home.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="wrapper">
+    <header>
+      <h1>🌍 Serene Travel Companion</h1>
+      <div class="filter-bar">
+        <label for="travellerType">Travelling with:</label>
+        <select id="travellerType">
+          <option value="all">Everyone</option>
+          <option value="family">Family 👨‍👩‍👧</option>
+          <option value="friends">Friends 👫</option>
+          <option value="couple">Couple 💑</option>
+        </select>
+      </div>
+    
+    </header>
+
+    <div class="scroll-wrapper">
+      <button class="scroll-btn left" id="scrollLeft">‹</button>
+      <main id="cardContainer">
+        <div class="card" data-tags="family friends">
+          <h2>🍽️ Top Food</h2>
+          <p>Discover the tastiest local dishes and where to find them.</p>
+        </div>
+        <div class="card" data-tags="couple friends">
+          <h2>🎭 Experiences</h2>
+          <p>Explore unforgettable cultural moments & activities.</p>
+        </div>
+        <div class="card" data-tags="couple family">
+          <h2>🌿 Hidden Gems</h2>
+          <p>Uncover peaceful, secret travel spots just for you.</p>
+        </div>
+        <div class="card" data-tags="couple">
+          <h2>🧘 Mindful</h2>
+          <p>Yoga retreats, nature meditations, art therapy & more.</p>
+        </div>
+        <div class="card" data-tags="family friends">
+          <h2>🛏️ Stays</h2>
+          <p>Find calm & aesthetic places to stay during your journey.</p>
+        </div>
+        <div class="card" data-tags="everyone">
+          <h2>🎧 Vibes</h2>
+          <p>Immerse yourself in ambient soundscapes and city feels.</p>
+        </div>
+      </main>
+      <button class="scroll-btn right" id="scrollRight">›</button>
+    </div>
+  </div>
+
+  <script src="home.js"></script>
+</body>
+</html>

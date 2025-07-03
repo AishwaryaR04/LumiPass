@@ -1,0 +1,190 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jedi Travel AI — Full India Map</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+    .map-wrapper {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      width: 100%;
+      height: 700px;
+      background-color: #f5f5f5;
+    }
+    .controls {
+      padding: 15px;
+      background: #ecf0f1;
+      border-bottom: 1px solid #bdc3c7;
+      text-align: center;
+    }
+    .btn, .control-btn {
+      background: #3498db;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      margin: 0 5px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background 0.3s;
+    }
+    .btn:hover, .control-btn:hover {
+      background: #2980b9;
+    }
+    .state {
+      fill: #e8f4f8;
+      stroke: #2c3e50;
+      stroke-width: 1;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    .state:hover {
+      fill: #3498db;
+      stroke-width: 2;
+    }
+    .state.selected {
+      fill: #e74c3c;
+      stroke: #c0392b;
+      stroke-width: 3;
+    }
+    .info-panel {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: rgba(255, 255, 255, 0.95);
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      min-width: 200px;
+      display: none;
+    }
+    .zoom-level {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      background: rgba(0,0,0,0.7);
+      color: white;
+      padding: 5px 10px;
+      border-radius: 5px;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+  <div class="controls">
+    <button class="control-btn" onclick="map.resetView()">🏠 Reset View</button>
+  </div>
+  <div class="map-wrapper">
+    <svg id="map-svg" viewBox="0 0 1000 1000" xmlns="http://www.w3.org/2000/svg">
+      <g id="india-map">
+      </g>
+    </svg>
+    <div class="info-panel">
+      <h3 id="state-name">🗺️ Map Information</h3>
+      <p id="stateInfo">Hover over a state to see details</p>
+      <p><strong>Total States:</strong> 28</p>
+      <p><strong>Union Territories:</strong> 8</p>
+    </div>
+    <div class="zoom-level" id="zoom-level">Zoom: 100%</div>
+  </div>
+  <script>
+    class IndiaMap {
+      constructor() {
+        this.svg = document.getElementById('map-svg');
+        this.mapGroup = document.getElementById('india-map');
+        this.infoPanel = document.querySelector('.info-panel');
+        this.zoomLevel = document.getElementById('zoom-level');
+        this.currentZoom = 0.6;
+        this.currentTranslateX = 0;
+        this.currentTranslateY = 40;
+        this.selectedState = null;
+
+        this.stateInfo = {
+          "Tamil Nadu": "Capital: Chennai. Known for temples and culture.",
+          "Kerala": "Capital: Thiruvananthapuram. God's Own Country."
+        };
+
+        this.initializeMap();
+      }
+
+      initializeMap() {
+        const states = document.querySelectorAll('.state');
+        states.forEach(state => {
+          state.addEventListener('click', e => this.onStateClick(e));
+          state.addEventListener('mouseenter', e => e.target.style.filter = 'brightness(1.1)');
+          state.addEventListener('mouseleave', e => e.target.style.filter = '');
+        });
+        this.updateTransform();
+      }
+
+      onStateClick(event) {
+        const state = event.target;
+        const name = state.dataset.state;
+
+        if (this.selectedState) this.selectedState.classList.remove('selected');
+        state.classList.add('selected');
+        this.selectedState = state;
+
+        this.zoomToState(state);
+        this.showStateInfo(name);
+      }
+
+      zoomToState(state) {
+        const bbox = state.getBBox();
+        const viewBox = this.svg.viewBox.baseVal;
+        const padding = 3;
+        const scaleX = viewBox.width / (bbox.width * padding);
+        const scaleY = viewBox.height / (bbox.height * padding);
+        const scale = Math.min(scaleX, scaleY, 3);
+        const centerX = bbox.x + bbox.width / 2;
+        const centerY = bbox.y + bbox.height / 2;
+        const viewCenterX = viewBox.width / 2;
+        const viewCenterY = viewBox.height / 2;
+
+        this.currentZoom = scale;
+        this.currentTranslateX = (viewCenterX - centerX) * scale;
+        this.currentTranslateY = (viewCenterY - centerY) * scale;
+        this.updateTransform();
+      }
+
+      showStateInfo(stateName) {
+        document.getElementById('state-name').textContent = stateName;
+        document.getElementById('stateInfo').textContent = this.stateInfo[stateName] || 'Information not available';
+        this.infoPanel.style.display = 'block';
+        setTimeout(() => { this.infoPanel.style.display = 'none'; }, 5000);
+      }
+
+      resetView() {
+        this.currentZoom = 0.6;
+        this.currentTranslateX = 0;
+        this.currentTranslateY = 40;
+        if (this.selectedState) this.selectedState.classList.remove('selected');
+        this.infoPanel.style.display = 'none';
+        this.updateTransform();
+      }
+
+      updateTransform() {
+        const t = `translate(${this.currentTranslateX}px, ${this.currentTranslateY}px) scale(${this.currentZoom})`;
+        this.mapGroup.style.transform = t;
+        this.mapGroup.style.transformOrigin = 'center center';
+        this.mapGroup.style.transition = 'transform 0.5s ease';
+        this.zoomLevel.textContent = `Zoom: ${Math.round(this.currentZoom * 100)}%`;
+      }
+    }
+
+    let map;
+    window.addEventListener('DOMContentLoaded', () => {
+      map = new IndiaMap();
+    });
+  </script>
+</body>
+</html>

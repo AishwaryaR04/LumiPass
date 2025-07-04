@@ -321,6 +321,79 @@
   button:active {
     background-color: #003f45;
   }
+  /* Floating help icon */
+#help-icon {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  font-size: 28px;
+ 
+  color: white;
+  padding: 12px 14px;
+  border: none;
+  cursor: pointer;
+  
+  z-index: 1001;
+  transition: transform 0.3s ease;
+}
+#help-icon:hover {
+  transform: scale(1.15);
+}
+
+/* Hidden popup initially */
+#mission-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 51, 0.8);
+  display: none; /* initially hidden */
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+
+/* Popup message box */
+.popup-content {
+  background: #ffffff;
+  color: #003366;
+  padding: 30px 40px;
+  border-radius: 16px;
+  text-align: center;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  font-size: 18px;
+  max-width: 400px;
+  animation: popIn 0.5s ease-out;
+}
+
+.popup-content button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #00cc99;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.popup-content button:hover {
+  background-color: #009977;
+}
+
+@keyframes popIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
 
   </style>
 </head>
@@ -404,6 +477,17 @@
   <div class="controls">
     <button class="control-btn" onclick="map.resetView()">Reset View</button>
   </div>
+  <!-- Floating Help Icon -->
+<div id="help-icon" title="help me!!!!">👾</div>
+
+<!-- Popup Message -->
+<div id="mission-popup">
+  <div class="popup-content">
+    <p>“Help me traveler, you're our only hope…”</p>
+    <button id="continue-btn">Continue your mission</button>
+  </div>
+</div>
+
 
   
 
@@ -572,6 +656,17 @@
     window.addEventListener('DOMContentLoaded', () => {
       map = new IndiaMap();
     });
+// Show popup when help icon is clicked
+document.getElementById("help-icon").addEventListener("click", () => {
+  document.getElementById("mission-popup").style.display = "flex";
+});
+
+// Hide popup AND help icon on "Continue your mission"
+document.getElementById("continue-btn").addEventListener("click", () => {
+  document.getElementById("mission-popup").style.display = "none";
+  document.getElementById("help-icon").style.display = "none";
+});
+
   </script>
 </body>
 </html>

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=1024, height=768" />
+  <title>Travel Guide App</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      height: 768px;
+      width: 1024px;
+      background: linear-gradient(135deg, #cceeff, #ffffff);
+      overflow: hidden;
+    }
+
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      position: absolute;
+      width: 100%;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .user-info img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+    }
+
+    .user-info span {
+      color: #ffffff;
+      font-weight: bold;
+    }
+
+    .sign-in-btn {
+      padding: 8px 16px;
+      background-color: #003366;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .sign-in-btn:hover {
+      background-color: #005599;
+    }
+
+    .header img {
+      width: 100%;
+      height: auto;
+      margin-top: 60px;
+    }
+
+    .content {
+      text-align: center;
+      padding: 20px;
+      background-color: #003366;
+      color: white;
+    }
+
+    h1 {
+      font-size: 48px;
+      margin-top: 20px;
+    }
+
+    .nav-bar {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin-top: 40px;
+      position: relative;
+    }
+
+    .nav-item {
+      font-size: 18px;
+      color: white;
+      cursor: pointer;
+      padding: 5px;
+      transition: color 0.3s;
+    }
+
+    .nav-item:hover {
+      color: #00cc99;
+    }
+
+    .active-bar {
+      position: absolute;
+      bottom: 0;
+      height: 4px;
+      width: 100px;
+      background-color: #00cc99;
+      transition: left 0.3s, width 0.3s;
+    }
+
+    .search-bar {
+      display: flex;
+      justify-content: center;
+      margin-top: 80px;
+    }
+
+    .search-bar input {
+      width: 400px;
+      padding: 12px;
+      border-radius: 20px 0 0 20px;
+      border: none;
+      outline: none;
+      font-size: 16px;
+    }
+
+    .search-bar button {
+      padding: 12px 20px;
+      border-radius: 0 20px 20px 0;
+      border: none;
+      background-color: #00cc66;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .search-bar button:hover {
+      background-color: #00994d;
+    }
+
+    .after-search {
+      background: linear-gradient(135deg, #cceeff, #ffffff);
+      height: 300px;
+    }
+  </style>
+</head>
+<body>
+  <div class="top-bar">
+    <div class="user-info" id="user-info"></div>
+    <button class="sign-in-btn" id="sign-in-btn">Sign in</button>
+  </div>
+
+  <div class="header">
+    <img src="header.png" alt="Header Image" />
+  </div>
+
+  <div class="content">
+    <h1>Where to?</h1>
+    <div class="nav-bar" id="nav-bar">
+      <div class="nav-item">Search All</div>
+      <div class="nav-item">Hotels</div>
+      <div class="nav-item">Things to Do</div>
+      <div class="nav-item">Restaurants</div>
+      <div class="nav-item">Flights</div>
+      <div class="nav-item">Holiday Homes</div>
+      <div class="active-bar" id="active-bar"></div>
+    </div>
+    <div class="search-bar">
+      <input type="text" placeholder="Places to go, things to do, hotels..." />
+      <button>Search</button>
+    </div>
+  </div>
+
+  <div class="after-search"></div>
+
+  <script>
+    document.getElementById("sign-in-btn").addEventListener("click", () => {
+      const username = "Aishwarya";
+      const pfpUrl = "https://via.placeholder.com/40";
+      const userInfo = document.getElementById("user-info");
+      userInfo.innerHTML = `<img src="${pfpUrl}" alt="Profile Picture" /><span>${username}</span>`;
+
+      const signInBtn = document.getElementById("sign-in-btn");
+      signInBtn.textContent = "Sign out";
+      signInBtn.onclick = () => {
+        userInfo.innerHTML = "";
+        signInBtn.textContent = "Sign in";
+        signInBtn.onclick = null;
+        document.getElementById("sign-in-btn").addEventListener("click", arguments.callee);
+      };
+    });
+
+    const navItems = document.querySelectorAll(".nav-item");
+    const activeBar = document.getElementById("active-bar");
+
+    function updateActiveBar(el) {
+      const rect = el.getBoundingClientRect();
+      const parentRect = el.parentElement.getBoundingClientRect();
+      activeBar.style.left = (rect.left - parentRect.left) + "px";
+      activeBar.style.width = rect.width + "px";
+    }
+
+    navItems.forEach(item => {
+      item.addEventListener("click", () => {
+        updateActiveBar(item);
+      });
+    });
+
+    window.onload = () => {
+      updateActiveBar(navItems[0]);
+    };
+  </script>
+</body>
+</html>
+

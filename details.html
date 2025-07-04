@@ -31,32 +31,11 @@
       font-weight: bold;
     }
 
-    .user-info {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .user-info img {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-    }
-
-    .user-info span {
-      color: #ffffff;
-      font-weight: bold;
-    }
 
     .sign-in-btn {
-      padding: 8px 16px;
       background-color: #003366;
       color: white;
       border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: background 0.3s;
-      margin-left: 10px;
     }
 
     .sign-in-btn:hover {
@@ -123,14 +102,14 @@
       padding: 12px 20px;
       border-radius: 0 20px 20px 0;
       border: none;
-      background-color: #00cc66;
+      background-color: rgba(0, 204, 153, 0.9);;
       color: white;
       font-size: 16px;
       cursor: pointer;
     }
 
     .search-bar button:hover {
-      background-color: #00994d;
+      background-color: rgba(2, 144, 108, 0.9);
     }
 
     .after-search {
@@ -358,6 +337,7 @@
   <div class="top-bar">
     <div class="lumipass-title">Lumipass</div>
     <div class="user-info" id="user-info"></div>
+    
     <button class="sign-in-btn" onclick="window.location.href='home1.html'">← Back</button>
   </div>
 
@@ -584,21 +564,7 @@
     }
 
     // Sign in functionality
-    document.getElementById("sign-in-btn").addEventListener("click", () => {
-      const username = "Aishwarya";
-      const pfpUrl = "https://via.placeholder.com/40";
-      const userInfo = document.getElementById("user-info");
-      userInfo.innerHTML = `<img src="${pfpUrl}" alt="Profile Picture" /><span>${username}</span>`;
-
-      const signInBtn = document.getElementById("sign-in-btn");
-      signInBtn.textContent = "Sign out";
-      signInBtn.onclick = () => {
-        userInfo.innerHTML = "";
-        signInBtn.textContent = "Sign in";
-        signInBtn.onclick = null;
-        document.getElementById("sign-in-btn").addEventListener("click", arguments.callee);
-      };
-    });
+   
 
     // Navigation bar functionality
     const navItems = document.querySelectorAll(".nav-item");

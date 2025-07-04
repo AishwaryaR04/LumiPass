@@ -31,29 +31,22 @@
     }
 
     .sign-in-btn {
-      padding: 0.5rem 1rem;
-      background-color: #a4c4e8;
-      color: white;
+      padding: 0.7rem 1rem;
+      background-color: #d8e6f4;
+      color: #004080;
       border: none;
       border-radius: 8px;
       font-size: 1rem;
       cursor: pointer;
       transition: background 0.3s;
       position: relative;
-      top: 5px;
+      top: 10px;
     }
 
     .sign-in-btn:hover {
       background-color: #5590d4;
     }
 
-    .profile-pic {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      object-fit: cover;
-      padding-top: 2rem;
-    }
 
     .logo-text-left {
       position: relative;
@@ -79,7 +72,7 @@
   position: absolute;
   max-width: 500px;
   top: 60%;
-  left: 50%;
+  left: 52%;
   transform: translate(-50%, -50%);
   z-index: 5; /* must be > canvas */
   text-align: center;
@@ -149,7 +142,7 @@
 
     .btn, .control-btn {
       background: #a4c4e8;
-      color: white;
+      color: #004080;
       border: none;
       padding: 10px 20px;
       margin: 0 5px;
@@ -221,7 +214,7 @@
     header h1 {
       margin-top: 50px;
       font-size: 2.5rem;
-      color: #118ab2;
+      color: #004080;
       margin-bottom: 0.5rem;
     }
 
@@ -241,7 +234,7 @@
       background: #ffffffee;
       border: none;
       font-size: 1.8rem;
-      color: #00a896;
+      color: #004080;
       border-radius: 50%;
       padding: 0.3rem 0.6rem;
       cursor: pointer;
@@ -296,7 +289,7 @@
 
     .card h2 {
       margin-bottom: 1rem;
-      color: #006d77;
+      color: #004080;
     }
 
     .card p {
@@ -311,7 +304,7 @@
 
     button {
     padding: 5px 28px;
-    background-color: #006d77;
+    background-color: #004080;
     color: white;
     font-weight: bold;
     font-size: 16px;
@@ -328,19 +321,21 @@
   button:active {
     background-color: #003f45;
   }
+
   </style>
 </head>
 <body>
   <div class="top-bar">
 
     <button class="sign-in-btn" onclick="window.location.href='login.html'">Sign In</button>
-    <img src="https://via.placeholder.com/40" alt="Profile" class="profile-pic" />
+    
   </div>
   <div class="logo-text-left">✨ LumiPass</div>
 
   <div id="globeViz"></div>
+  
   <div class="globe-text">
-    <h1>✨Explore the World <br />with LumiPass✨</h1>
+    <h1>✨Explore the  World <br />with LumiPass✨</h1>
     <p>Your peaceful companion for every journey</p>
   </div>
 
@@ -407,7 +402,7 @@
     </div>
   </div>
   <div class="controls">
-    <button class="control-btn" onclick="map.resetView()">🏠 Reset View</button>
+    <button class="control-btn" onclick="map.resetView()">Reset View</button>
   </div>
 
   

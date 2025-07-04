@@ -137,7 +137,263 @@
     .after-search {
       background: linear-gradient(135deg, #cceeff, #ffffff);
       height: 300px;
+      overflow-y: auto;
     }
+
+    .search-results {
+      display: none;
+      padding: 20px;
+      background: white;
+      margin: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    .search-results.active {
+      display: block;
+      animation: fadeInUp 0.6s ease-out;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .results-header {
+      color: #003366;
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      text-align: center;
+      background: linear-gradient(45deg, #003366, #00cc99);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .destination-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .destination-card {
+      background: linear-gradient(135deg, #ffffff, #f8fdff);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      cursor: pointer;
+      position: relative;
+      box-shadow: 0 4px 20px rgba(0, 51, 102, 0.1);
+      transform: translateY(0);
+      border: 1px solid rgba(0, 204, 153, 0.1);
+    }
+
+    .destination-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(0, 204, 153, 0.1), rgba(0, 51, 102, 0.05));
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: 1;
+    }
+
+    .destination-card:hover::before {
+      opacity: 1;
+    }
+
+    .destination-card:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 12px 40px rgba(0, 51, 102, 0.2);
+      border-color: rgba(0, 204, 153, 0.3);
+    }
+
+    .destination-image-container {
+      position: relative;
+      overflow: hidden;
+      height: 180px;
+    }
+
+    .destination-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .destination-card:hover .destination-image {
+      transform: scale(1.1);
+    }
+
+    .image-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(to bottom, transparent 0%, rgba(0, 51, 102, 0.1) 100%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .destination-card:hover .image-overlay {
+      opacity: 1;
+    }
+
+    .destination-type {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: rgba(0, 204, 153, 0.9);
+      color: white;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      backdrop-filter: blur(10px);
+      transform: translateY(-5px);
+      opacity: 0;
+      transition: all 0.3s ease;
+      z-index: 2;
+    }
+
+    .destination-card:hover .destination-type {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .destination-content {
+      padding: 20px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .destination-name {
+      color: #003366;
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 10px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .destination-name::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 2px;
+      width: 0;
+      background: linear-gradient(90deg, #00cc99, #003366);
+      transition: width 0.4s ease;
+    }
+
+    .destination-card:hover .destination-name::after {
+      width: 100%;
+    }
+
+    .destination-description {
+      color: #666;
+      font-size: 14px;
+      line-height: 1.6;
+      margin-bottom: 15px;
+      opacity: 0.8;
+      transition: opacity 0.3s ease;
+    }
+
+    .destination-card:hover .destination-description {
+      opacity: 1;
+    }
+
+    .card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 15px;
+      padding-top: 15px;
+      border-top: 1px solid rgba(0, 204, 153, 0.1);
+    }
+
+    .rating {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      color: #ffa500;
+      font-size: 14px;
+    }
+
+    .star {
+      font-size: 16px;
+      transition: transform 0.2s ease;
+    }
+
+    .destination-card:hover .star {
+      transform: scale(1.1);
+    }
+
+
+    .no-results {
+      text-align: center;
+      color: #666;
+      font-style: italic;
+      margin-top: 20px;
+      padding: 40px;
+      background: linear-gradient(135deg, #f8fdff, #ffffff);
+      border-radius: 16px;
+      border: 2px dashed rgba(0, 204, 153, 0.3);
+    }
+
+    /* Staggered animation for cards */
+    .destination-card {
+      animation: slideInUp 0.6s ease-out;
+      animation-fill-mode: both;
+    }
+
+    .destination-card:nth-child(1) { animation-delay: 0.1s; }
+    .destination-card:nth-child(2) { animation-delay: 0.2s; }
+    .destination-card:nth-child(3) { animation-delay: 0.3s; }
+    .destination-card:nth-child(4) { animation-delay: 0.4s; }
+    .destination-card:nth-child(5) { animation-delay: 0.5s; }
+    .destination-card:nth-child(6) { animation-delay: 0.6s; }
+
+    @keyframes slideInUp {
+      from {
+        opacity: 0;
+        transform: translateY(50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Floating animation for type badges */
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-3px);
+      }
+    }
+
+    .destination-type {
+      animation: float 2s ease-in-out infinite;
+    }
+
+    
+
   </style>
 </head>
 <body>
@@ -147,7 +403,7 @@
   </div>
 
   <div class="header">
-    <img src="header.png" alt="Header Image" />
+    <img src="https://via.placeholder.com/1024x200/87CEEB/003366?text=Travel+Guide+Header" alt="Header Image" />
   </div>
 
   <div class="content">
@@ -157,19 +413,221 @@
       <div class="nav-item">Hotels</div>
       <div class="nav-item">Things to Do</div>
       <div class="nav-item">Restaurants</div>
-      <div class="nav-item">Flights</div>
-      <div class="nav-item">Holiday Homes</div>
+   
       <div class="active-bar" id="active-bar"></div>
     </div>
     <div class="search-bar">
-      <input type="text" placeholder="Places to go, things to do, hotels..." />
-      <button>Search</button>
+      <input type="text" id="search-input" placeholder="Places to go, things to do, hotels..." />
+      <button id="search-button">Search</button>
     </div>
   </div>
 
-  <div class="after-search"></div>
+  <div class="after-search">
+    <div class="search-results" id="search-results">
+      <div class="results-header" id="results-header"></div>
+      <div class="destination-grid" id="destination-grid"></div>
+    </div>
+  </div>
 
   <script>
+    // Destination data for different cities
+    const destinationData = {
+      chennai: [
+        {
+          name: "Marina Beach",
+          description: "One of the longest urban beaches in the world, perfect for evening walks and local street food.",
+          type: "Beach",
+          rating: 4.5,
+          image: "https://storage.googleapis.com/goa-app-12a91.appspot.com/2024-07-29T00%3A43%3A47.232Z1001%281%29.webp?GoogleAccessId=firebase-adminsdk-zeqcj%40goa-app-12a91.iam.gserviceaccount.com&Expires=16447017600&Signature=M53WyLMaHiKSYw3RxRdUCY5jK4loUhgs%2BwbakBaqgSDQVwyhA%2BEjO%2Ftp1%2BIcEZzScY5IjWrqJE%2FRn92qrzPgCl1ltyelMAGse%2Fd%2Bch4PF1Tw7D3yUztKY6EPAo8Oz%2FdXyrbkDFEVa6urYMd8nh8GywZjoXVUaxXEw2PmuvC8klTNT7neb18Axjs3t4cxsD%2BMWkiEiwkSQgw1pW%2BITlZ7H%2BtJ%2BseY0Be73iQ4dG33mJ3uOo8jEJ%2BUvAeE91DPqv0xwO3qIlkGTiNIWskvKH5mRaR2P66HR%2BxAluki00IxeQ6Z3yMSOlQZPwXJsSqq4fUr443W7u1CnLx9PUt6znhcOw%3D%3D"
+        },
+        {
+          name: "Mahabalipuram",
+          description: "UNESCO World Heritage site featuring ancient rock-cut temples and sculptures from the 7th century.",
+          type: "Heritage",
+          rating: 4.8,
+          image: "https://www.ancient-origins.net/sites/default/files/field/image/Shore-Temple.jpg"
+        },
+        {
+          name: "DakshinaChitra",
+          description: "Living museum showcasing the rich cultural heritage of South India with traditional crafts and performances.",
+          type: "Cultural",
+          rating: 4.3,
+          image: "https://s7ap1.scene7.com/is/image/incredibleindia/dakshinachitra-museum-chennai-tamil-nadu-2-attr-hero?qlt=82&ts=1726655061318"
+        },
+        {
+          name: "Guindy National Park & Children's Park",
+          description: "Urban national park with diverse wildlife and a dedicated children's area for family fun.",
+          type: "Nature",
+          rating: 4.2,
+          image: "https://chennaitourism.travel/images/places-to-visit/headers/guindy-national-park-chennai-tourism-entry-fee-timings-holidays-reviews-header.jpg"
+        },
+        {
+          name: "Kalakshetra Foundation",
+          description: "Premier institution for Indian classical dance and music, offering performances and cultural programs.",
+          type: "Cultural",
+          rating: 4.6,
+          image: "https://kalkbuckmedi21.s3.ap-south-1.amazonaws.com/2021/12/Gallery-Dance-12-1.jpg"
+        },
+        {
+          name: "Kapaleeshwarar Temple (Mylapore)",
+          description: "Ancient Dravidian temple dedicated to Lord Shiva, featuring stunning architecture and religious significance.",
+          type: "Temple",
+          rating: 4.7,
+          image: "https://api.blessingsonthenet.com/uploads/microsite/bb22acf1c71e250ce51a7a1583bf1d6c-1699019656900-Kapaleeswarar-Temple-Chennai.jpg"
+        }
+      ],
+      goa: [
+        {
+          name: "Baga Beach",
+          description: "Famous for its vibrant nightlife, water sports, and beachside shacks serving fresh seafood.",
+          type: "Beach",
+          rating: 4.4,
+          image: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/18/3e/36/95/baga-sea-beach.jpg?w=800&h=-1&s=1"
+        },
+        {
+          name: "Calangute Beach",
+          description: "Known as the 'Queen of Beaches', popular for sunbathing, swimming, and beach activities.",
+          type: "Beach",
+          rating: 4.3,
+          image: "https://www.goa.gov.in/wp-content/uploads/2020/08/Calangutemain.jpg"
+        },
+        {
+          name: "Fort Aguada",
+          description: "17th-century Portuguese fort with stunning views of the Arabian Sea and historic lighthouse.",
+          type: "Fort",
+          rating: 4.6,
+          image: "https://www.fabhotels.com/blog/wp-content/uploads/2019/06/Aguada-Fort_600.jpg"
+        },
+        {
+          name: "Chapora Fort",
+          description: "Ruined Portuguese fort offering panoramic views, made famous by Bollywood movies.",
+          type: "Fort",
+          rating: 4.2,
+          image: "https://www.fabhotels.com/blog/wp-content/uploads/2022/01/Chapora-fort_709883707-600X400.jpg"
+        },
+        {
+          name: "Dudhsagar Waterfalls",
+          description: "Spectacular four-tiered waterfall cascading from 310 meters, best visited during monsoon.",
+          type: "Waterfall",
+          rating: 4.8,
+          image: "https://dq1q7qkthxkc0.cloudfront.net/UpdatedMedia/dfd94b26-04d0-4ccd-b5df-05d5c5ef5f4a.webp"
+        }
+      ],
+       thiruvananthapuram: [
+        {
+          name: "Padmanabhaswamy Temple",
+          description: "Ancient temple dedicated to Lord Vishnu, famous for its intricate architecture and treasures.",
+          type: "Temple",
+          rating:4.8,
+          image: "https://i.pinimg.com/736x/c6/e3/3e/c6e33e73a41c294022a85f7f099ff7d7.jpg"
+        },
+        {
+          name: "Kovalam Beach",
+          description: "Crescent-shaped beach known for its lighthouse, Ayurvedic treatments, and surfing.",
+          type: "Beach",
+          rating:4.6,
+          image: "https://pixahive.com/wp-content/uploads/2020/12/kovalam-beach-253563-pixahive.jpg"
+        },
+        {
+          name: "Napier Museum",
+          description: "Historic museum showcasing Kerala's cultural heritage with art, crafts, and archaeological exhibits.",
+          type: "Museum",
+          rating:4.4,
+          image: "https://www.dtpcthiruvananthapuram.com/uploads/picture_gallery/gallery_images/napier-musieum-20230517090726974613.webp"
+        },
+        {
+          name: "Poovar Island",
+          description: "Serene island destination where backwaters meet the Arabian Sea, perfect for boat rides.",
+          type: "Island",
+          rating:4.5,
+          image: "https://i.pinimg.com/originals/72/fd/20/72fd20eb268183a22e0d961a18605a2d.png"
+        },
+        {
+          name: "Thiruvananthapuram Zoo",
+          description: "One of India's oldest zoos, home to diverse wildlife in a natural woodland setting.",
+          type: "Zoo",
+          rating:3.9,
+          image: "https://keralatourism.travel/images/places-to-visit/headers/thiruvananthapuram-zoo-tourism-entry-fee-timings-holidays-reviews-header.jpg"
+        },
+        {
+          name: "Agasthyakoodam (Agastya Mala)",
+          description: "Highest peak in Kerala, offering challenging trekking and rich biodiversity.",
+          type: "Mountain",
+          rating:4.2,
+          image: "https://www.japjitravel.com/jap/media/gallery/Agastya-Mala-Kerala.jpg"
+        },
+        {
+          name: "Shankumugham Beach",
+          description: "Popular beach with golden sand, sunset views, and the famous Matsya Kanyaka (Mermaid) sculpture.",
+          type: "Beach",
+          rating:4.6,
+          image: "https://tse4.mm.bing.net/th/id/OIP.TeLMxV3tSWbiyxJDmwbMuAHaEK?r=0&rs=1&pid=ImgDetMain&o=7&rm=3"
+        }
+      ],
+      mumbai: [
+        {
+          name: "Gateway of India",
+          description: "Iconic arch monument overlooking the Arabian Sea, built to commemorate King George V's visit.",
+          type: "Monument",
+          rating:4.5,
+          image: "https://th.bing.com/th/id/OIP.45JX0WPCSGLIOmIFCMNwFwHaFj?w=283&h=180&c=7&r=0&o=7&dpr=1.3&pid=1.7&rm=3"
+        },
+        {
+          name: "Marine Drive",
+          description: "Curved boulevard known as the 'Queen's Necklace' for its sparkling night lights.",
+          type: "Promenade",
+          rating:4.3,
+          image: "https://assets.zeezest.com/blogs/PROD_marine%20drive%20_1693625898430_thumb_1200.jpeg?w=3840&q=75"
+        },
+        {
+          name: "Chhatrapati Shivaji Maharaj Terminus (CST)",
+          description: "UNESCO World Heritage railway station, masterpiece of Victorian Gothic architecture.",
+          type: "Heritage",
+          rating:4.6,
+          image: "https://mumbaitourism.travel/images/places-to-visit/headers/chhatrapati-shivaji-terminus-mumbai-indian-tourism-entry-fee-timings-holidays-reviews-header.jpg"
+        },
+        {
+          name: "Elephanta Caves",
+          description: "Ancient rock-cut caves on Elephanta Island, famous for impressive sculptures of Lord Shiva.",
+          type: "Caves",
+          rating:4.7,
+          image: "https://www.holidify.com/images/cmsuploads/compressed/shutterstock_694433434_20191213110339_20191213110412.png"
+        },
+        {
+          name: "Sanjay Gandhi National Park",
+          description: "Urban national park with diverse wildlife, ancient Kanheri Caves, and nature trails.",
+          type: "National Park",
+          rating:4.0,
+          image: "https://wildlifezones.com/wp-content/uploads/2019/08/Sanjay-Gandhi-National-Park.jpg"
+        },
+        {
+          name: "Siddhivinayak Temple",
+          description: "Famous Hindu temple dedicated to Lord Ganesha, one of Mumbai's most visited religious sites.",
+          type: "Temple",
+          rating:4.3,
+          image: "https://apnayatra.com/wp-content/uploads/2023/08/Shree-Siddhivinayak-Temple-Mumbai.jpg"
+        }
+      ]
+    };
+
+    // Generate stars based on rating
+    function generateStars(rating) {
+      const fullStars = Math.floor(rating);
+      const hasHalfStar = rating % 1 !== 0;
+      let starsHTML = '';
+      
+      for (let i = 0; i < fullStars; i++) {
+        starsHTML += '<span class="star">★</span>';
+      }
+      
+      if (hasHalfStar) {
+        starsHTML += '<span class="star">☆</span>';
+      }
+      
+      return starsHTML;
+    }
+
+    // Sign in functionality
     document.getElementById("sign-in-btn").addEventListener("click", () => {
       const username = "Aishwarya";
       const pfpUrl = "https://via.placeholder.com/40";
@@ -186,6 +644,7 @@
       };
     });
 
+    // Navigation bar functionality
     const navItems = document.querySelectorAll(".nav-item");
     const activeBar = document.getElementById("active-bar");
 
@@ -202,10 +661,85 @@
       });
     });
 
+    // Search functionality
+    function performSearch() {
+      const searchInput = document.getElementById("search-input");
+      const searchQuery = searchInput.value.toLowerCase().trim();
+      const searchResults = document.getElementById("search-results");
+      const resultsHeader = document.getElementById("results-header");
+      const destinationGrid = document.getElementById("destination-grid");
+
+      if (searchQuery === "") {
+        searchResults.classList.remove("active");
+        return;
+      }
+
+      let cityKey = null;
+      let cityName = "";
+
+      // Check which city matches the search query
+      if (searchQuery.includes("chennai") || searchQuery.includes("madras")) {
+        cityKey = "chennai";
+        cityName = "Chennai";
+      } else if (searchQuery.includes("goa")) {
+        cityKey = "goa";
+        cityName = "Goa";
+      } else if (searchQuery.includes("thiruvananthapuram") || searchQuery.includes("trivandrum")) {
+        cityKey = "thiruvananthapuram";
+        cityName = "Thiruvananthapuram";
+      } else if (searchQuery.includes("mumbai") || searchQuery.includes("bombay")) {
+        cityKey = "mumbai";
+        cityName = "Mumbai";
+      }
+
+      if (cityKey && destinationData[cityKey]) {
+        resultsHeader.textContent = `Top Destinations in ${cityName}`;
+        destinationGrid.innerHTML = "";
+
+        destinationData[cityKey].forEach(destination => {
+          const card = document.createElement("div");
+          card.className = "destination-card";
+          card.innerHTML = `
+            <div class="destination-image-container">
+              <img src="${destination.image}" alt="${destination.name}" class="destination-image" />
+              <div class="image-overlay"></div>
+              <div class="destination-type">${destination.type}</div>
+            </div>
+            <div class="destination-content">
+              <div class="destination-name">${destination.name}</div>
+              <div class="destination-description">${destination.description}</div>
+              <div class="card-footer">
+                <div class="rating">
+                  ${generateStars(destination.rating)}
+                  <span>${destination.rating}</span>
+               
+            </div>
+          `;
+          destinationGrid.appendChild(card);
+        });
+
+        searchResults.classList.add("active");
+      } else {
+        resultsHeader.textContent = `Search Results for "${searchQuery}"`;
+        destinationGrid.innerHTML = `<div class="no-results">No specific results found. Try searching for "Chennai", "Goa", "Thiruvananthapuram", or "Mumbai" to see popular destinations!</div>`;
+        searchResults.classList.add("active");
+      }
+    }
+
+    // Search button click event
+    document.getElementById("search-button").addEventListener("click", performSearch);
+
+    // Search on Enter key press
+    document.getElementById("search-input").addEventListener("keypress", (e) => {
+      if (e.key === "Enter") {
+        performSearch();
+      }
+    });
+
+    // Initialize active bar position
     window.onload = () => {
       updateActiveBar(navItems[0]);
     };
   </script>
 </body>
 </html>
-
